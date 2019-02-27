@@ -14,7 +14,7 @@ class Quiz extends Component {
 	return (
     	  <div>
             <h1>{this.props.quizz.name}</h1>
-	        <Link  to={'/quizz/'+this.props.quizz._uid}><img src={HTTP_SERVER_PORT_PICTURES + this.props.quizz.icon} /></Link>  
+	        <Link  to={'/quizz/'+this.props.quizz._id}><img src={HTTP_SERVER_PORT_PICTURES + this.props.quizz.icon} /></Link>  
 	    </div>
 	);
     }
