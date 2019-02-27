@@ -7,11 +7,11 @@ const db = require('./db/mongoose.js');
 const Users = db.users;
 const Quizzes = db.quizzes;
 router
-  .use(express.static('resources'))
-  .use(bodyParser.json()) // for parsing application/json
-  .use(bodyParser.urlencoded({
-    extended: true
-  })) // for parsing application/x-www-form-urlencoded
+ // .use(express.static('resources'))
+ /// .use(bodyParser.json()) // for parsing application/json
+  //.use(bodyParser.urlencoded({
+  //  extended: true
+  //})) // for parsing application/x-www-form-urlencoded
   .get("/users", (req, res) => {
     Users
       .find({})
@@ -42,6 +42,22 @@ router
               res.json(data);
           }})
   })
+  .post('/upload', (req, res) => {
+    console.log(req);
+    req.files.file.mv(__dirname + '/resources/pictures/' + req.files.file.name,
+        (err) => {
+          if (err)
+            return res.status(500).send(err);
+          res.json({file: req.files.file.name});
+        }
+      );
+  })        
+  .post("/createquiz", (req, res) => {
+    const q = new Quizzes(req.body);    // The json object is the body of the request
+    q.save()                          // Save the object.
+     .then(item => res.json(item))     // send the object in response
+     .catch(err => res.status(400).send("unable to save to database"));
+  })          
   .use((req, res) => {
     res.status(400);
     res.json({
