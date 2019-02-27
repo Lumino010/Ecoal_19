@@ -11,14 +11,26 @@ db.once('open', () => {
 });
 
 // database collections
-const usersSchema = Schema({
+const usersSchema = mongoose.Schema({
   name: String,
   password: String
+});
+
+const quizzesSchema = mongoose.Schema({
+  name: String,
+  icon: String,
+  keywords: [],
+  questions: [],
+  published: Boolean,
+  ownerId: Schema.Types.ObjectId,
+  scores: []
 });
 
 
 // exports
 const Users = mongoose.model('Users', usersSchema);
+const Quizzes = mongoose.model('Quizzes', quizzesSchema);
 
 module.exports = {};
 module.exports.users = Users;
+module.exports.quizzes = Quizzes;
